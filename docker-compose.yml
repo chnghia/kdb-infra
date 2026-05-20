@@ -84,8 +84,24 @@ services:
       timeout: 5s
       retries: 5
 
+  # Redis (Cache & Message Broker)
+  redis:
+    image: redis:7-alpine
+    container_name: kdb-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
 volumes:
   postgres_data:
   neo4j_data:
   minio_data:
   qdrant_data:
+  redis_data:
